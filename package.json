@@ -5,7 +5,11 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node compiled-js/src/index.js",
+    "dev": "nodemon compiled-js/src/index.js",
+    "start-ts": "tsc -w",
+    "build": "tsc --project tsconfig.json",
+    "studio": "npx prisma studio"
   },
   "repository": {
     "type": "git",
