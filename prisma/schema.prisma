@@ -1,0 +1,36 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+// https://www.prismabuilder.io/
+model Apply {
+  apply_id     String    @id @unique @default(cuid())
+  author_vk_id Int
+  description  String?
+  game         Game
+  created      DateTime  @default(now())
+  playing_time DateTime?
+  my           TeamComposition @default(Соло)
+  looking_for  TeamComposition @default(Соло)
+}
+
+enum Game {
+  CS-GO
+  Dota 2
+  Brawl Stars
+  Other
+}
+
+enum TeamComposition {
+  Соло
+  Дует
+  Трио
+  Сквад
+  5 человек
+  6 человек
+  Более 6 человек
+}
