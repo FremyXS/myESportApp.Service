@@ -7,7 +7,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 // https://www.prismabuilder.io/
-model Apply {
+model ApplyController {
   apply_id     String    @id @unique @default(cuid())
   author_vk_id Int
   description  String?

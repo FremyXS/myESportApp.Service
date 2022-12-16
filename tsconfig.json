@@ -3,10 +3,9 @@
     "target": "es6",
     "module": "commonJS",
     "moduleResolution": "Node",
-    "outDir": "compiled-js",
+    "sourceMap": true,
+    "outDir": "dist",
+    "baseUrl": ".",
     "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "useUnknownInCatchVariables": false,
-    "skipLibCheck": true
   }
 }

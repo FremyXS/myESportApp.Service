@@ -1,7 +1,7 @@
 import {PrismaClient, Apply} from '@prisma/client'
 const prisma = new PrismaClient()
 
-class DbApply {
+class ApplyService {
     async create(data): Promise<void> {
         await prisma.T.create//...
     }
@@ -13,4 +13,4 @@ class DbApply {
     }
 }
 
-module.exports = new DbApply()
+export default new ApplyService()
