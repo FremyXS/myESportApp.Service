@@ -8,14 +8,16 @@
 Node.js 
 Typescript
 Express
+Prisma
 ```
 
 ## Запуск проекта
 
 ```bash
-git clone https://github.com/DemLog/myESportApp.Service.git
+git clone https://github.com/FremyXS/myESportApp.Service.git
 cd myESportApp.Service
 npm install
+prisma generate
 npm run start
 ```
 
@@ -24,6 +26,7 @@ npm run start
 
 ```shell
 PORT=5000
+DATABASE_URL="postgresql://<user>:<password>@<host>:<port>/<db>?schema=public"
 ```
 
 <hr/>
