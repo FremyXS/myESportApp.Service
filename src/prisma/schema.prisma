@@ -23,6 +23,7 @@ model User {
 model Pet {
   pet_id  Int       @id @unique @default(autoincrement())
   name    String
+  image   String
   UserPet UserPet[]
 }
 
