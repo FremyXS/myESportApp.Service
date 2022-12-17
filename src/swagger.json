@@ -156,6 +156,94 @@
 				"parameters": []
 			}
 		},
+		"/interests/all": {
+			"get": {
+				"operationId": "GetAllInterests",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IResponse"
+								}
+							}
+						},
+						"headers": {
+							"IResponse": {
+								"schema": {
+									"$ref": "#/components/schemas/IResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Interests"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/interests/{vk_id}": {
+			"get": {
+				"operationId": "GetMatchingInterests",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IResponse"
+								}
+							}
+						},
+						"headers": {
+							"IResponse": {
+								"schema": {
+									"$ref": "#/components/schemas/IResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Interests"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "vk_id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
 		"/user/register": {
 			"post": {
 				"operationId": "RegisterUser",
