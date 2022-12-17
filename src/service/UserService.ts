@@ -1,5 +1,5 @@
 import {PrismaClient, User} from '@prisma/client'
-import {CreationUserData} from '../models/userModels'
+import {CreationUserData, UserInfo} from '../models/userModels'
 
 const prisma = new PrismaClient()
 
@@ -37,11 +37,21 @@ export class UserService {
         })
     }
 
-    async getUserProfile(data: { vk_id: number }): Promise<User> {
-        return await prisma.user.findUnique({
+    async getUserProfile(data: { vk_id: number }): Promise<UserInfo> {
+        return  await prisma.user.findUniqueOrThrow({
             where: {
                 vk_id: data.vk_id
+            },
+            select: {
+                interests: true,
+                city: true,
+                my_pets: true,
+                my_age: true,
+                description: true,
+                my_sex: true,
+                my_achievements: true
             }
         })
+
     }
 }
