@@ -21,7 +21,7 @@ model User {
 }
 
 model Pet {
-  pet_id  Int       @id @unique
+  pet_id  Int       @id @unique @default(autoincrement())
   name    String
   UserPet UserPet[]
 }
@@ -44,7 +44,7 @@ model UserAchievement {
   achievment_id             String      @id @unique @default(cuid())
   user                      User        @relation(fields: [userVk_id], references: [vk_id])
   achievment                Achievement @relation(fields: [achievementAchievement_id], references: [achievement_id])
-  count                     Int         @default(autoincrement())
+  count                     Int         @default(0)
   userVk_id                 Int
   achievementAchievement_id Int
 }
