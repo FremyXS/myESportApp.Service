@@ -1,14 +1,9 @@
 import {PrismaClient} from '@prisma/client'
-import {Breed} from "../scripts/breed.scripts";
 const prisma = new PrismaClient()
 
 
 async function main() {
-    const bt = new Breed();
-    const res = await bt.getDogs();
-    await prisma.pet.createMany({
-        data: res
-    })
+
     await prisma.interest.createMany({
         data: [
             {title: 'Футбол'},
