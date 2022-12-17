@@ -28,4 +28,27 @@ export class PetService {
         })
         return users.map(e => e.User)
     }
+
+    async getUserPet(vk_id: number) {
+        return await prisma.user.findUnique({
+            where: {
+                vk_id: vk_id
+            },
+            select: {
+                my_pet: {
+                    select: {
+                        pet_name: true,
+                        pet_sex: true,
+                        pet_age: true,
+                        pet: {
+                            select: {
+                                image: true,
+                                name: true
+                            }
+                        }
+                    }
+                }
+            }
+        })
+    }
 }

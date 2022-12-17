@@ -1,5 +1,5 @@
 import {Interest, PrismaClient, User} from '@prisma/client'
-import {CreationUserData} from '../models/userModels'
+import {UpdateUserInterests} from "../models/interestsModel";
 
 const prisma = new PrismaClient()
 
@@ -58,6 +58,37 @@ export class InterestsService {
                 vk_id: e.vk_id,
                 test_sorted: e.matching
             }
+        })
+    }
+
+    async getUserInterests(vk_id: number) {
+        return await prisma.user.findUniqueOrThrow({
+            where: {
+                vk_id: vk_id
+            },
+            select: {
+                UserInterests: {
+                    select: {
+                        interest: {
+                            select: {
+                                title: true,
+                                id: true
+                            }
+                        }
+                    }
+                }
+            }
+        })
+    }
+
+    async updateInterests(vk_id: number, interests: UpdateUserInterests) {
+        await prisma.userInterests.deleteMany({
+            where: {
+                userVk_id: vk_id
+            }
+        })
+        await prisma.userInterests.createMany({
+            data: interests.interests
         })
     }
 }
