@@ -1,14 +1,9 @@
-export interface UserModel {
-    vk_id: number;
-    is_admin: boolean;
-}
-
-export interface IRequestUser {
+export interface IRequestTokenUser {
     params: object;
     sign: string;
 }
 
-export interface IResponseUser {
+export interface IResponseTokenUser {
     vk_id: number;
     token: string;
 }
