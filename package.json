@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Backend special for myESportApp",
   "type": "commonjs",
-  "main": "src/server.ts",
+  "main": "dist/server.js",
   "scripts": {
     "build": "tsc",
     "prestart": "npm run tsoagen && npm run build",
