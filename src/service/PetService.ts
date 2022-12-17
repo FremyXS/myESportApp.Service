@@ -4,8 +4,8 @@ const prisma = new PrismaClient()
 
 export class PetService {
     async getPets(){
-        const a = await prisma.pet.findMany()
-
+        const a = await prisma.pet.findMany();
+        return a;
     }
 
     async petMatching(vk_id: number) {

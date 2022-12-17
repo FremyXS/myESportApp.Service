@@ -31,7 +31,7 @@ export class InterestsController extends Controller {
         }
     }
 
-    @Get("{vk_id}")
+    @Get("/matching/{vk_id}")
     @Tags("Interests")
     // @Security("jwt")
     @Response<IResponse>('400', 'Bad Request')

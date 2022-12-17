@@ -1,5 +1,6 @@
 import {PrismaClient, User} from '@prisma/client'
 import {CreationUserData} from '../models/userModels'
+import {AddedAchievementRequest} from "../models/achievmentModel";
 
 const prisma = new PrismaClient()
 
@@ -31,10 +32,10 @@ export class AchievmentService {
     //     // })
     // }
 
-    async addAchievment(vk_id: number, achievment_id: number) {
+    async addAchievment(data: AddedAchievementRequest) {
         const user_ach = await prisma.user.findUnique({
             where: {
-                vk_id: vk_id
+                vk_id: data.vk_id
             },
             select: {
                 my_achievements: true
@@ -43,7 +44,7 @@ export class AchievmentService {
 
         await prisma.user.update({
             where: {
-                vk_id: vk_id
+                vk_id: data.vk_id
             },
             data: {
                 my_achievements: {

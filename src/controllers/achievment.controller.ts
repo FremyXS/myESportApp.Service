@@ -4,7 +4,7 @@ import {AddedAchievementRequest} from "../models/achievmentModel";
 import {AchievmentService} from "../service/AchievmentService";
 
 @Route('/achievment')
-export class InterestsController extends Controller {
+export class AchievmentController extends Controller {
     @Post("")
     @Tags("Achievments")
     @Response<IResponse>('400', 'Bad Request')
