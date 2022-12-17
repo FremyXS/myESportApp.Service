@@ -24,70 +24,97 @@
 				"type": "object",
 				"additionalProperties": false
 			},
-			"Game": {
+			"Sex": {
+				"type": "string",
 				"enum": [
-					0,
-					1,
-					2,
-					3
+					"female",
+					"male"
 				],
-				"type": "number"
+				"description": "Enums"
 			},
-			"TeamComposition": {
-				"enum": [
-					0,
-					1,
-					2,
-					3,
-					4,
-					5,
-					6
-				],
-				"type": "number"
-			},
-			"ApplyModel": {
+			"CreationUserData": {
 				"properties": {
-					"apply_id": {
+					"pets": {
+						"items": {
+							"properties": {
+								"pet_age": {
+									"type": "number",
+									"format": "double"
+								},
+								"pet_name": {
+									"type": "string"
+								},
+								"pet_sex": {
+									"$ref": "#/components/schemas/Sex"
+								},
+								"pet_id": {
+									"type": "number",
+									"format": "double"
+								}
+							},
+							"required": [
+								"pet_age",
+								"pet_name",
+								"pet_sex",
+								"pet_id"
+							],
+							"type": "object"
+						},
+						"type": "array"
+					},
+					"city": {
 						"type": "string"
 					},
-					"author_vk_id": {
-						"type": "number",
-						"format": "double"
+					"sex": {
+						"$ref": "#/components/schemas/Sex"
 					},
 					"description": {
 						"type": "string"
 					},
-					"game": {
-						"$ref": "#/components/schemas/Game"
+					"age": {
+						"type": "number",
+						"format": "double"
 					},
-					"created": {
-						"type": "string",
-						"format": "date-time"
+					"interests": {
+						"items": {
+							"type": "number",
+							"format": "double"
+						},
+						"type": "array"
 					},
-					"playing_time": {
-						"type": "string",
-						"format": "date-time"
-					},
-					"my": {
-						"$ref": "#/components/schemas/TeamComposition"
-					},
-					"looking_for": {
-						"$ref": "#/components/schemas/TeamComposition"
+					"vk_id": {
+						"type": "number",
+						"format": "double"
 					}
 				},
 				"required": [
-					"apply_id",
-					"author_vk_id",
-					"game",
-					"created",
-					"my",
-					"looking_for"
+					"pets",
+					"city",
+					"sex",
+					"description",
+					"age",
+					"interests",
+					"vk_id"
 				],
-				"type": "object",
-				"additionalProperties": false
+				"type": "object"
 			}
 		},
-		"securitySchemes": {}
+		"securitySchemes": {
+			"api_key": {
+				"type": "apiKey",
+				"name": "access_token",
+				"in": "query"
+			},
+			"tsoa_auth": {
+				"type": "oauth2",
+				"flows": {
+					"implicit": {
+						"authorizationUrl": "http://swagger.io/api/oauth/dialog",
+						"scopes": {}
+					}
+				}
+			}
+		}
 	},
 	"info": {
 		"title": "myesportapp.service",
@@ -102,79 +129,6 @@
 	},
 	"openapi": "3.0.0",
 	"paths": {
-		"/apply": {
-			"post": {
-				"operationId": "Create",
-				"responses": {
-					"200": {
-						"description": "OK",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/IResponse"
-								}
-							}
-						}
-					},
-					"400": {
-						"description": "Bad Request",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/IResponse"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Apply"
-				],
-				"security": [],
-				"parameters": [],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/ApplyModel"
-							}
-						}
-					}
-				}
-			}
-		},
-		"/apply/{apply_id}": {
-			"get": {
-				"operationId": "Get",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/IResponse"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Apply"
-				],
-				"security": [],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "apply_id",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				]
-			}
-		},
 		"/": {
 			"get": {
 				"operationId": "Index",
@@ -200,6 +154,104 @@
 				},
 				"security": [],
 				"parameters": []
+			}
+		},
+		"/user/register": {
+			"post": {
+				"operationId": "RegisterUser",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IResponse"
+								}
+							}
+						},
+						"headers": {
+							"IResponse": {
+								"schema": {
+									"$ref": "#/components/schemas/IResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Users"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreationUserData"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/user/{vk_id}": {
+			"get": {
+				"operationId": "GetUserID",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IResponse"
+								}
+							}
+						},
+						"headers": {
+							"IResponse": {
+								"schema": {
+									"$ref": "#/components/schemas/IResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Users"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "vk_id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
 			}
 		}
 	},
