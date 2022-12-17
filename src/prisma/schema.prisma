@@ -13,6 +13,7 @@ model User {
   vk_id           Int               @id @unique
   description     String
   interests       Interest[]
+  city            String
   my_sex          Sex
   my_age          Int
   my_achievements UserAchievement[]
@@ -20,14 +21,14 @@ model User {
 }
 
 model Pet {
-  pet_id  Int       @id @unique
+  pet_id  Int       @id @unique @default(autoincrement())
   name    String
   UserPet UserPet[]
 }
 
 model Swipes {
-  id    String  @unique @default(cuid())
-  from  Int     @id @unique
+  id    Int     @id @unique @default(autoincrement())
+  from  Int
   To    Int
   liked Boolean @default(false)
 }
@@ -40,23 +41,23 @@ model Achievement {
 }
 
 model UserAchievement {
-  achievment_id             String      @id @unique @default(cuid())
+  achievment_id             Int         @id @unique @default(autoincrement())
   user                      User        @relation(fields: [userVk_id], references: [vk_id])
   achievment                Achievement @relation(fields: [achievementAchievement_id], references: [achievement_id])
-  count                     Int         @default(autoincrement())
+  count                     Int         @default(0)
   userVk_id                 Int
   achievementAchievement_id Int
 }
 
 model Interest {
-  id        String @id @unique @default(cuid())
+  id        Int    @id @unique @default(autoincrement())
   title     String
   User      User?  @relation(fields: [userVk_id], references: [vk_id])
   userVk_id Int?
 }
 
 model UserPet {
-  id        String @id @unique @default(cuid())
+  id        Int    @id @unique @default(autoincrement())
   pet_sex   Sex
   pet_name  String
   pet_age   Int
