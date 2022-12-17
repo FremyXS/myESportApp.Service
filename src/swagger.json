@@ -1,0 +1,211 @@
+{
+	"components": {
+		"examples": {},
+		"headers": {},
+		"parameters": {},
+		"requestBodies": {},
+		"responses": {},
+		"schemas": {
+			"IResponse": {
+				"properties": {
+					"message": {
+						"type": "string"
+					},
+					"status": {
+						"type": "string"
+					},
+					"data": {}
+				},
+				"required": [
+					"message",
+					"status",
+					"data"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Game": {
+				"enum": [
+					0,
+					1,
+					2,
+					3
+				],
+				"type": "number"
+			},
+			"TeamComposition": {
+				"enum": [
+					0,
+					1,
+					2,
+					3,
+					4,
+					5,
+					6
+				],
+				"type": "number"
+			},
+			"ApplyModel": {
+				"properties": {
+					"apply_id": {
+						"type": "string"
+					},
+					"author_vk_id": {
+						"type": "number",
+						"format": "double"
+					},
+					"description": {
+						"type": "string"
+					},
+					"game": {
+						"$ref": "#/components/schemas/Game"
+					},
+					"created": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"playing_time": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"my": {
+						"$ref": "#/components/schemas/TeamComposition"
+					},
+					"looking_for": {
+						"$ref": "#/components/schemas/TeamComposition"
+					}
+				},
+				"required": [
+					"apply_id",
+					"author_vk_id",
+					"game",
+					"created",
+					"my",
+					"looking_for"
+				],
+				"type": "object",
+				"additionalProperties": false
+			}
+		},
+		"securitySchemes": {}
+	},
+	"info": {
+		"title": "myesportapp.service",
+		"version": "1.0.0",
+		"description": "Backend special for myESportApp",
+		"license": {
+			"name": "ISC"
+		},
+		"contact": {
+			"name": "1+1=11"
+		}
+	},
+	"openapi": "3.0.0",
+	"paths": {
+		"/apply": {
+			"post": {
+				"operationId": "Create",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Apply"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ApplyModel"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/apply/{apply_id}": {
+			"get": {
+				"operationId": "Get",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Apply"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "apply_id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/": {
+			"get": {
+				"operationId": "Index",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"msg": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"msg"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": []
+			}
+		}
+	},
+	"servers": [
+		{
+			"url": "/"
+		}
+	]
+}
