@@ -51,7 +51,7 @@ export class InterestsService {
             }
         })
         return users_matching.sort((a, b) => {
-            return a.matching - b.matching
+            return b.matching - a.matching
         }).map(e => {
             return {
                 vk_id: e.vk_id,
