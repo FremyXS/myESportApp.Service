@@ -3,7 +3,7 @@ import {CreationUserData} from '../models/userModels'
 
 const prisma = new PrismaClient()
 
-class InterestsService {
+export class InterestsService {
     async getInterests() {
         return await prisma.interest.findMany()
     }
