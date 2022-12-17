@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Backend special for myESportApp",
   "type": "commonjs",
-  "main": "src/server.ts",
+  "main": "dist/server.ts",
   "scripts": {
     "build": "tsc",
     "prestart": "npm run tsoagen && npm run build",
@@ -42,6 +42,7 @@
     "swagger-ui-express": "^4.6.0"
   },
   "prisma": {
-    "schema": "src/prisma/schema.prisma"
+    "schema": "src/prisma/schema.prisma",
+    "seed": "ts-node src/prisma/seed.ts"
   }
 }

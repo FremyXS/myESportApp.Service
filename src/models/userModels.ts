@@ -2,7 +2,7 @@ import {Sex} from "@prisma/client";
 
 export type CreationUserData = {
     vk_id: number
-    interests: string[]
+    interests: number[]
     age: number
     description: string
     sex: Sex
