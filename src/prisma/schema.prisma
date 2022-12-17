@@ -12,13 +12,13 @@ datasource db {
 model User {
   vk_id           Int               @id @unique
   description     String
-  interests       Interest[]
   city            String
   my_sex          Sex
   my_age          Int
   my_achievements UserAchievement[]
   my_pet          UserPet           @relation(fields: [userPetId], references: [id])
   userPetId       Int
+  UserInterests   UserInterests[]
 }
 
 model Pet {
@@ -51,21 +51,29 @@ model UserAchievement {
   achievementAchievement_id Int
 }
 
+model UserInterests {
+  id         Int      @id
+  user       User     @relation(fields: [userVk_id], references: [vk_id])
+  interest   Interest @relation(fields: [interestId], references: [id])
+  userVk_id  Int
+  interestId Int
+}
+
 model Interest {
-  id        Int    @id @unique @default(autoincrement())
-  title     String
-  User      User?  @relation(fields: [userVk_id], references: [vk_id])
-  userVk_id Int?
+  id            Int             @id @unique @default(autoincrement())
+  title         String
+  UserInterests UserInterests[]
 }
 
 model UserPet {
-  id        Int    @id @unique @default(autoincrement())
-  pet_sex   Sex
-  pet_name  String
-  pet_age   Int
-  pet       Pet    @relation(fields: [petPet_id], references: [pet_id])
-  User      User[]
-  petPet_id Int
+  id           Int    @id @unique @default(autoincrement())
+  pet_sex      Sex
+  pet_name     String
+  pet_age      Int
+  pet          Pet    @relation(fields: [petPet_id], references: [pet_id])
+  User         User[]
+  pet_breed_id Int
+  petPet_id    Int
 }
 
 enum Sex {

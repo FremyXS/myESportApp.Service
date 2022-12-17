@@ -1,4 +1,4 @@
-[
+export const dogs = [
   {
     "name": "Австралийская овчарка (аусси)",
     "image": "https://lapkins.ru/upload/iblock/2ca/2ca744cbcd97469ed86860852ace4f40.jpg"
