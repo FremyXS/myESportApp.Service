@@ -24,6 +24,23 @@
 				"type": "object",
 				"additionalProperties": false
 			},
+			"AddedAchievementRequest": {
+				"properties": {
+					"achievment_id": {
+						"type": "number",
+						"format": "double"
+					},
+					"vk_id": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"achievment_id",
+					"vk_id"
+				],
+				"type": "object"
+			},
 			"Sex": {
 				"type": "string",
 				"enum": [
@@ -34,33 +51,30 @@
 			},
 			"CreationUserData": {
 				"properties": {
-					"pets": {
-						"items": {
-							"properties": {
-								"pet_age": {
-									"type": "number",
-									"format": "double"
-								},
-								"pet_name": {
-									"type": "string"
-								},
-								"pet_sex": {
-									"$ref": "#/components/schemas/Sex"
-								},
-								"pet_id": {
-									"type": "number",
-									"format": "double"
-								}
+					"pet": {
+						"properties": {
+							"pet_age": {
+								"type": "number",
+								"format": "double"
 							},
-							"required": [
-								"pet_age",
-								"pet_name",
-								"pet_sex",
-								"pet_id"
-							],
-							"type": "object"
+							"pet_name": {
+								"type": "string"
+							},
+							"pet_sex": {
+								"$ref": "#/components/schemas/Sex"
+							},
+							"pet_breed_id": {
+								"type": "number",
+								"format": "double"
+							}
 						},
-						"type": "array"
+						"required": [
+							"pet_age",
+							"pet_name",
+							"pet_sex",
+							"pet_breed_id"
+						],
+						"type": "object"
 					},
 					"city": {
 						"type": "string"
@@ -88,7 +102,7 @@
 					}
 				},
 				"required": [
-					"pets",
+					"pet",
 					"city",
 					"sex",
 					"description",
@@ -129,6 +143,55 @@
 	},
 	"openapi": "3.0.0",
 	"paths": {
+		"/achievment": {
+			"post": {
+				"operationId": "AddAchievementsUser",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IResponse"
+								}
+							}
+						},
+						"headers": {
+							"IResponse": {
+								"schema": {
+									"$ref": "#/components/schemas/IResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Achievments"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/AddedAchievementRequest"
+							}
+						}
+					}
+				}
+			}
+		},
 		"/": {
 			"get": {
 				"operationId": "Index",
@@ -229,6 +292,94 @@
 				},
 				"tags": [
 					"Interests"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "vk_id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/pets/all": {
+			"get": {
+				"operationId": "GetAllPets",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IResponse"
+								}
+							}
+						},
+						"headers": {
+							"IResponse": {
+								"schema": {
+									"$ref": "#/components/schemas/IResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Pets"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/pets/{vk_id}": {
+			"get": {
+				"operationId": "GetMatchingPets",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IResponse"
+								}
+							}
+						},
+						"headers": {
+							"IResponse": {
+								"schema": {
+									"$ref": "#/components/schemas/IResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Pets"
 				],
 				"security": [],
 				"parameters": [
