@@ -1,7 +1,7 @@
-import {Body, Controller, Get, Post, Response, Route, SuccessResponse, Tags, Security, Path} from "tsoa";
+import {Body, Controller, Get, Post, Response, Route, SuccessResponse, Tags, Put, Path} from "tsoa";
 import {IResponse} from "../models/responseModel";
 import {UserService} from "../service/UserService";
-import {CreationUserData} from "../models/userModels";
+import {CreationUserData, UpdateUserInfo} from "../models/userModels";
 
 @Route('/user')
 export class UserController extends Controller {
@@ -76,6 +76,31 @@ export class UserController extends Controller {
                 message: "FAIL",
                 status: "400",
                 data: err.message
+            }
+            return response
+        }
+    }
+
+    @Put("{vk_id}")
+    @Tags("Users")
+    @Response<IResponse>('400', 'Bad Request')
+    @SuccessResponse<IResponse>('200', 'OK')
+    public async updateUser(@Path() vk_id: number, @Body() body: UpdateUserInfo): Promise<IResponse> {
+        try {
+            const userService = new UserService();
+            const user = await userService.updateUserData(vk_id, body);
+            const response = {
+                message: "OK",
+                status: "200",
+                data: "Пользователь обновлен"
+            }
+            return response;
+        } catch (err) {
+            this.setStatus(400);
+            const response = {
+                message: "FAIL",
+                status: "400",
+                data: err
             }
             return response
         }

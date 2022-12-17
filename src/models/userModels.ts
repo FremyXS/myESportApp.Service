@@ -29,10 +29,3 @@ export type UpdateUserInfo = {
     my_sex?: Sex
     my_age?: number
 }
-
-export type UpdateUserInterests = {
-    interests: {
-        userVk_id: number,
-        interestId: number
-    }[]
-}

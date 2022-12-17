@@ -24,20 +24,31 @@
 				"type": "object",
 				"additionalProperties": false
 			},
-			"AddedAchievementRequest": {
+			"UpdateUserInterests": {
 				"properties": {
-					"achievment_id": {
-						"type": "number",
-						"format": "double"
-					},
-					"vk_id": {
-						"type": "number",
-						"format": "double"
+					"interests": {
+						"items": {
+							"properties": {
+								"interestId": {
+									"type": "number",
+									"format": "double"
+								},
+								"userVk_id": {
+									"type": "number",
+									"format": "double"
+								}
+							},
+							"required": [
+								"interestId",
+								"userVk_id"
+							],
+							"type": "object"
+						},
+						"type": "array"
 					}
 				},
 				"required": [
-					"achievment_id",
-					"vk_id"
+					"interests"
 				],
 				"type": "object"
 			},
@@ -111,6 +122,24 @@
 					"vk_id"
 				],
 				"type": "object"
+			},
+			"UpdateUserInfo": {
+				"properties": {
+					"my_age": {
+						"type": "number",
+						"format": "double"
+					},
+					"my_sex": {
+						"$ref": "#/components/schemas/Sex"
+					},
+					"city": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					}
+				},
+				"type": "object"
 			}
 		},
 		"securitySchemes": {
@@ -143,82 +172,6 @@
 	},
 	"openapi": "3.0.0",
 	"paths": {
-		"/achievment": {
-			"post": {
-				"operationId": "AddAchievementsUser",
-				"responses": {
-					"200": {
-						"description": "OK",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/IResponse"
-								}
-							}
-						},
-						"headers": {
-							"IResponse": {
-								"schema": {
-									"$ref": "#/components/schemas/IResponse"
-								}
-							}
-						}
-					},
-					"400": {
-						"description": "Bad Request",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/IResponse"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Achievments"
-				],
-				"security": [],
-				"parameters": [],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/AddedAchievementRequest"
-							}
-						}
-					}
-				}
-			}
-		},
-		"/": {
-			"get": {
-				"operationId": "Index",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"properties": {
-										"msg": {
-											"type": "string"
-										}
-									},
-									"required": [
-										"msg"
-									],
-									"type": "object"
-								}
-							}
-						}
-					}
-				},
-				"security": [],
-				"parameters": []
-			}
-		},
 		"/interests/all": {
 			"get": {
 				"operationId": "GetAllInterests",
@@ -258,7 +211,7 @@
 				"parameters": []
 			}
 		},
-		"/interests/{vk_id}": {
+		"/interests/matching/{vk_id}": {
 			"get": {
 				"operationId": "GetMatchingInterests",
 				"responses": {
@@ -307,6 +260,112 @@
 				]
 			}
 		},
+		"/interests/{vk_id}": {
+			"get": {
+				"operationId": "GetInterestsUser",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IResponse"
+								}
+							}
+						},
+						"headers": {
+							"IResponse": {
+								"schema": {
+									"$ref": "#/components/schemas/IResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Interests"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "vk_id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			},
+			"put": {
+				"operationId": "UpdateInterestsUser",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IResponse"
+								}
+							}
+						},
+						"headers": {
+							"IResponse": {
+								"schema": {
+									"$ref": "#/components/schemas/IResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Interests"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "vk_id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdateUserInterests"
+							}
+						}
+					}
+				}
+			}
+		},
 		"/pets/all": {
 			"get": {
 				"operationId": "GetAllPets",
@@ -348,7 +407,56 @@
 		},
 		"/pets/{vk_id}": {
 			"get": {
-				"operationId": "GetMatchingPets",
+				"operationId": "GetPetsUser",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IResponse"
+								}
+							}
+						},
+						"headers": {
+							"IResponse": {
+								"schema": {
+									"$ref": "#/components/schemas/IResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Pets"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "vk_id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/pets/matching/{vk_id}": {
+			"get": {
+				"operationId": "GetMatchingPet",
 				"responses": {
 					"200": {
 						"description": "OK",
@@ -491,6 +599,63 @@
 						}
 					}
 				]
+			},
+			"put": {
+				"operationId": "UpdateUser",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IResponse"
+								}
+							}
+						},
+						"headers": {
+							"IResponse": {
+								"schema": {
+									"$ref": "#/components/schemas/IResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Users"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "vk_id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdateUserInfo"
+							}
+						}
+					}
+				}
 			}
 		}
 	},

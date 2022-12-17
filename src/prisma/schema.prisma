@@ -13,9 +13,9 @@ model User {
   my_sex        Sex
   my_age        Int
   city          String
+  userPetId     Int
   my_pet        UserPet         @relation(fields: [userPetId], references: [id])
   UserInterests UserInterests[]
-  userPetId     Int
 }
 
 model Pet {
@@ -47,13 +47,13 @@ model Interest {
 }
 
 model UserPet {
-  id        Int    @id @unique @default(autoincrement())
   pet_sex   Sex
   pet_name  String
   pet_age   Int
-  pet       Pet    @relation(fields: [petPet_id], references: [pet_id])
-  User      User[]
   petPet_id Int
+  id        Int    @id @unique @default(autoincrement())
+  User      User[]
+  pet       Pet    @relation(fields: [petPet_id], references: [pet_id])
 }
 
 enum Sex {

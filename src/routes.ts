@@ -3,10 +3,6 @@
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { Controller, ValidationService, FieldErrors, ValidateError, TsoaRoute, HttpStatusCodeLiteral, TsoaResponse, fetchMiddlewares } from '@tsoa/runtime';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-import { AchievmentController } from './controllers/achievment.controller';
-// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-import { IndexController } from './controllers/index.controller';
-// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { InterestsController } from './controllers/interests.controller';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { PetController } from './controllers/pet.controller';
@@ -31,9 +27,9 @@ const models: TsoaRoute.Models = {
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "AddedAchievementRequest": {
+    "UpdateUserInterests": {
         "dataType": "refAlias",
-        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"achievment_id":{"dataType":"double","required":true},"vk_id":{"dataType":"double","required":true}},"validators":{}},
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"interests":{"dataType":"array","array":{"dataType":"nestedObjectLiteral","nestedProperties":{"interestId":{"dataType":"double","required":true},"userVk_id":{"dataType":"double","required":true}}},"required":true}},"validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "Sex": {
@@ -46,6 +42,11 @@ const models: TsoaRoute.Models = {
         "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"pet":{"dataType":"nestedObjectLiteral","nestedProperties":{"pet_age":{"dataType":"double","required":true},"pet_name":{"dataType":"string","required":true},"pet_sex":{"ref":"Sex","required":true},"pet_breed_id":{"dataType":"double","required":true}},"required":true},"city":{"dataType":"string","required":true},"sex":{"ref":"Sex","required":true},"description":{"dataType":"string","required":true},"age":{"dataType":"double","required":true},"interests":{"dataType":"array","array":{"dataType":"double"},"required":true},"vk_id":{"dataType":"double","required":true}},"validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "UpdateUserInfo": {
+        "dataType": "refAlias",
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"my_age":{"dataType":"double"},"my_sex":{"ref":"Sex"},"city":{"dataType":"string"},"description":{"dataType":"string"}},"validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 };
 const validationService = new ValidationService(models);
 
@@ -56,55 +57,6 @@ export function RegisterRoutes(app: express.Router) {
     //  NOTE: If you do not see routes for all of your controllers in this file, then you might not have informed tsoa of where to look
     //      Please look into the "controllerPathGlobs" config option described in the readme: https://github.com/lukeautry/tsoa
     // ###########################################################################################################
-        app.post('/achievment',
-            ...(fetchMiddlewares<RequestHandler>(AchievmentController)),
-            ...(fetchMiddlewares<RequestHandler>(AchievmentController.prototype.addAchievementsUser)),
-
-            function AchievmentController_addAchievementsUser(request: any, response: any, next: any) {
-            const args = {
-                    body: {"in":"body","name":"body","required":true,"ref":"AddedAchievementRequest"},
-            };
-
-            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-
-            let validatedArgs: any[] = [];
-            try {
-                validatedArgs = getValidatedArgs(args, request, response);
-
-                const controller = new AchievmentController();
-
-
-              const promise = controller.addAchievementsUser.apply(controller, validatedArgs as any);
-              promiseHandler(controller, promise, response, 200, next);
-            } catch (err) {
-                return next(err);
-            }
-        });
-        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.get('/',
-            ...(fetchMiddlewares<RequestHandler>(IndexController)),
-            ...(fetchMiddlewares<RequestHandler>(IndexController.prototype.index)),
-
-            function IndexController_index(request: any, response: any, next: any) {
-            const args = {
-            };
-
-            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-
-            let validatedArgs: any[] = [];
-            try {
-                validatedArgs = getValidatedArgs(args, request, response);
-
-                const controller = new IndexController();
-
-
-              const promise = controller.index.apply(controller, validatedArgs as any);
-              promiseHandler(controller, promise, response, undefined, next);
-            } catch (err) {
-                return next(err);
-            }
-        });
-        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/interests/all',
             ...(fetchMiddlewares<RequestHandler>(InterestsController)),
             ...(fetchMiddlewares<RequestHandler>(InterestsController.prototype.getAllInterests)),
@@ -129,7 +81,7 @@ export function RegisterRoutes(app: express.Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.get('/interests/:vk_id',
+        app.get('/interests/matching/:vk_id',
             ...(fetchMiddlewares<RequestHandler>(InterestsController)),
             ...(fetchMiddlewares<RequestHandler>(InterestsController.prototype.getMatchingInterests)),
 
@@ -148,6 +100,57 @@ export function RegisterRoutes(app: express.Router) {
 
 
               const promise = controller.getMatchingInterests.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, 200, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/interests/:vk_id',
+            ...(fetchMiddlewares<RequestHandler>(InterestsController)),
+            ...(fetchMiddlewares<RequestHandler>(InterestsController.prototype.getInterestsUser)),
+
+            function InterestsController_getInterestsUser(request: any, response: any, next: any) {
+            const args = {
+                    vk_id: {"in":"path","name":"vk_id","required":true,"dataType":"double"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new InterestsController();
+
+
+              const promise = controller.getInterestsUser.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, 200, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.put('/interests/:vk_id',
+            ...(fetchMiddlewares<RequestHandler>(InterestsController)),
+            ...(fetchMiddlewares<RequestHandler>(InterestsController.prototype.updateInterestsUser)),
+
+            function InterestsController_updateInterestsUser(request: any, response: any, next: any) {
+            const args = {
+                    vk_id: {"in":"path","name":"vk_id","required":true,"dataType":"double"},
+                    body: {"in":"body","name":"body","required":true,"ref":"UpdateUserInterests"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new InterestsController();
+
+
+              const promise = controller.updateInterestsUser.apply(controller, validatedArgs as any);
               promiseHandler(controller, promise, response, 200, next);
             } catch (err) {
                 return next(err);
@@ -180,9 +183,9 @@ export function RegisterRoutes(app: express.Router) {
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/pets/:vk_id',
             ...(fetchMiddlewares<RequestHandler>(PetController)),
-            ...(fetchMiddlewares<RequestHandler>(PetController.prototype.getMatchingPets)),
+            ...(fetchMiddlewares<RequestHandler>(PetController.prototype.getPetsUser)),
 
-            function PetController_getMatchingPets(request: any, response: any, next: any) {
+            function PetController_getPetsUser(request: any, response: any, next: any) {
             const args = {
                     vk_id: {"in":"path","name":"vk_id","required":true,"dataType":"double"},
             };
@@ -196,7 +199,32 @@ export function RegisterRoutes(app: express.Router) {
                 const controller = new PetController();
 
 
-              const promise = controller.getMatchingPets.apply(controller, validatedArgs as any);
+              const promise = controller.getPetsUser.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, 200, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/pets/matching/:vk_id',
+            ...(fetchMiddlewares<RequestHandler>(PetController)),
+            ...(fetchMiddlewares<RequestHandler>(PetController.prototype.getMatchingPet)),
+
+            function PetController_getMatchingPet(request: any, response: any, next: any) {
+            const args = {
+                    vk_id: {"in":"path","name":"vk_id","required":true,"dataType":"double"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new PetController();
+
+
+              const promise = controller.getMatchingPet.apply(controller, validatedArgs as any);
               promiseHandler(controller, promise, response, 200, next);
             } catch (err) {
                 return next(err);
@@ -247,6 +275,32 @@ export function RegisterRoutes(app: express.Router) {
 
 
               const promise = controller.getUserID.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, 200, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.put('/user/:vk_id',
+            ...(fetchMiddlewares<RequestHandler>(UserController)),
+            ...(fetchMiddlewares<RequestHandler>(UserController.prototype.updateUser)),
+
+            function UserController_updateUser(request: any, response: any, next: any) {
+            const args = {
+                    vk_id: {"in":"path","name":"vk_id","required":true,"dataType":"double"},
+                    body: {"in":"body","name":"body","required":true,"ref":"UpdateUserInfo"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new UserController();
+
+
+              const promise = controller.updateUser.apply(controller, validatedArgs as any);
               promiseHandler(controller, promise, response, 200, next);
             } catch (err) {
                 return next(err);
