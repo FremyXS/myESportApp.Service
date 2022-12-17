@@ -19,17 +19,12 @@ export class UserService {
                 my_age: data.age,
                 my_sex: data.sex,
                 description: data.description,
-                my_pets: {
-                    createMany: {
-                        data: data.pets.map(e => {
-                                return {
-                                    petPet_id: e.pet_id,
-                                    pet_age: e.pet_age,
-                                    pet_sex: e.pet_sex,
-                                    pet_name: e.pet_name
-                                }
-                            }
-                        )
+                my_pet: {
+                    create: {
+                        petPet_id: data.pet.pet_id,
+                        pet_age: data.pet.pet_age,
+                        pet_sex: data.pet.pet_sex,
+                        pet_name: data.pet.pet_name
                     }
                 },
                 city: data.city
@@ -37,21 +32,27 @@ export class UserService {
         })
     }
 
-    async getUserProfile(data: { vk_id: number }): Promise<UserInfo> {
-        return  await prisma.user.findUniqueOrThrow({
+    async getUserProfile(data: { vk_id: number }): Promise<any> {
+        const a =  await prisma.user.findUniqueOrThrow({
             where: {
                 vk_id: data.vk_id
             },
             select: {
                 interests: true,
                 city: true,
-                my_pets: true,
+                my_pet: {
+                  select: {
+                      pet: true,
+                      pet_sex: true,
+                      pet_name: true,
+                      pet_age: true
+                  }
+                },
                 my_age: true,
                 description: true,
                 my_sex: true,
                 my_achievements: true
             }
         })
-
     }
 }

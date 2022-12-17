@@ -10,7 +10,9 @@
     "start": "node .",
     "server:watch": "ts-node-dev --respawn --transpile-only src/server.ts",
     "studio": "npx prisma studio",
-    "tsoagen": "npx tsoa spec-and-routes"
+    "tsoagen": "npx tsoa spec-and-routes",
+
+    "test-dimu": "ts-node src/scripts/breed.scripts.ts"
   },
   "repository": {
     "type": "git",

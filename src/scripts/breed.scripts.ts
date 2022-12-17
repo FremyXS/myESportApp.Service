@@ -27,3 +27,5 @@ export class Breed {
         })
     }
 }
+
+console.log(new Breed().getDogs().then(r => r))

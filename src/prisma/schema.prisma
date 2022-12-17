@@ -17,7 +17,8 @@ model User {
   my_sex          Sex
   my_age          Int
   my_achievements UserAchievement[]
-  my_pets         UserPet[]
+  my_pet          UserPet           @relation(fields: [userPetId], references: [id])
+  userPetId       Int
 }
 
 model Pet {
@@ -63,8 +64,7 @@ model UserPet {
   pet_name  String
   pet_age   Int
   pet       Pet    @relation(fields: [petPet_id], references: [pet_id])
-  User      User?  @relation(fields: [userVk_id], references: [vk_id])
-  userVk_id Int?
+  User      User[]
   petPet_id Int
 }
 

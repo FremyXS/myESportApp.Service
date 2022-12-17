@@ -1,4 +1,4 @@
-import {Sex, Interest, UserAchievement, UserPet} from "@prisma/client";
+import {Sex, Interest, UserAchievement, Pet} from "@prisma/client";
 
 export type CreationUserData = {
     vk_id: number
@@ -7,12 +7,12 @@ export type CreationUserData = {
     description: string
     sex: Sex
     city: string
-    pets: {
+    pet: {
         pet_id: number
         pet_sex: Sex
         pet_name: string
         pet_age: number
-    } []
+    }
 }
 export type UserInfo = {
     description: string
@@ -21,5 +21,5 @@ export type UserInfo = {
     my_sex: Sex
     my_age: number
     my_achievements: UserAchievement[]
-    my_pets: UserPet[]
+    my_pet: {pet_sex: Sex, pet_name: string, pet_age: number, pet: Pet}
 }
