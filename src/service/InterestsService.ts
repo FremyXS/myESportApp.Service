@@ -36,7 +36,6 @@ export class InterestsService {
                     select: {
                         interest: {
                             select: {
-                                title: true,
                                 id: true
                             }
                         }
@@ -48,7 +47,7 @@ export class InterestsService {
             return {
                 interests: e.UserInterests,
                 vk_id: e.vk_id,
-                matching: my_interests.UserInterests.filter(s => e.UserInterests.includes(s)).length
+                matching: my_interests.UserInterests.filter(s => e.UserInterests.map(x => x.interest.id).includes(s.interest.id)).length
             }
         })
         return users_matching.sort((a, b) => {

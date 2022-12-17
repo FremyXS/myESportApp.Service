@@ -12,7 +12,7 @@
     "studio": "npx prisma studio",
     "tsoagen": "npx tsoa spec-and-routes",
 
-    "test-dimu": "ts-node src/scripts/breed.scripts.ts"
+    "test-dimu": "ts-node src/service/InterestsService.ts"
   },
   "repository": {
     "type": "git",
