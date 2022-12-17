@@ -56,7 +56,8 @@
 				"type": "string",
 				"enum": [
 					"female",
-					"male"
+					"male",
+					"secret"
 				],
 				"description": "Enums"
 			},
