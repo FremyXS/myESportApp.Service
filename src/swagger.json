@@ -77,7 +77,8 @@
 					},
 					"interests": {
 						"items": {
-							"type": "string"
+							"type": "number",
+							"format": "double"
 						},
 						"type": "array"
 					},

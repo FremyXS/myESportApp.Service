@@ -5,6 +5,8 @@ import { Controller, ValidationService, FieldErrors, ValidateError, TsoaRoute, H
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { IndexController } from './controllers/index.controller';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { PetController } from './controllers/pet.controller';
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { UserController } from './controllers/user.controller';
 import { expressAuthentication } from './middleware/auth.middleware';
 // @ts-ignore - no great way to install types from subpackage
@@ -32,7 +34,7 @@ const models: TsoaRoute.Models = {
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "CreationUserData": {
         "dataType": "refAlias",
-        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"pets":{"dataType":"array","array":{"dataType":"nestedObjectLiteral","nestedProperties":{"pet_age":{"dataType":"double","required":true},"pet_name":{"dataType":"string","required":true},"pet_sex":{"ref":"Sex","required":true},"pet_id":{"dataType":"double","required":true}}},"required":true},"city":{"dataType":"string","required":true},"sex":{"ref":"Sex","required":true},"description":{"dataType":"string","required":true},"age":{"dataType":"double","required":true},"interests":{"dataType":"array","array":{"dataType":"string"},"required":true},"vk_id":{"dataType":"double","required":true}},"validators":{}},
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"pets":{"dataType":"array","array":{"dataType":"nestedObjectLiteral","nestedProperties":{"pet_age":{"dataType":"double","required":true},"pet_name":{"dataType":"string","required":true},"pet_sex":{"ref":"Sex","required":true},"pet_id":{"dataType":"double","required":true}}},"required":true},"city":{"dataType":"string","required":true},"sex":{"ref":"Sex","required":true},"description":{"dataType":"string","required":true},"age":{"dataType":"double","required":true},"interests":{"dataType":"array","array":{"dataType":"double"},"required":true},"vk_id":{"dataType":"double","required":true}},"validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 };
