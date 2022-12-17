@@ -1,34 +1,34 @@
-import {PrismaClient} from '@prisma/client'
+import {PrismaClient, Status} from '@prisma/client'
 const prisma = new PrismaClient()
 
 export class LikesService {
-    async doLike(my_vk_id: number, user_to_like: number, liked: boolean) {
+    async doLike(my_vk_id: number, user_to_like: number, status: Status) {
         await prisma.swipes.findFirstOrThrow({
             where: {
                 AND: [
                     {from: my_vk_id},
                     {To: user_to_like},
-                    {liked: liked}
+                    {status: status}
                 ]
             }
         })
         await prisma.swipes.create({
             data: {
-                liked: liked,
+                status: status,
                 from: my_vk_id,
                 To: user_to_like
             }
         })
 
-        if (liked) {
-            const isHeLikedMe = await prisma.swipes.findFirstOrThrow({
+        if (status === Status.accepted) {
+            await prisma.swipes.findFirstOrThrow({
                 where: {
                     AND: [
                         {To: my_vk_id},
                         {from: user_to_like},
-                        {liked: true}
+                        {status: Status.accepted}
                     ]
-                },
+                }
             }).then(() => {
                 //TODO: вызов уведомления
             }).catch()
@@ -40,7 +40,7 @@ export class LikesService {
             where: {
                 AND: [
                     {from: vk_id},
-                    {liked: true}
+                    {status: Status.accepted}
                 ]
             },
             select: {
@@ -62,7 +62,7 @@ export class LikesService {
             where: {
                 AND: [
                     {To: vk_id},
-                    {liked: true}
+                    {status: Status.accepted}
                 ]
             },
             select: {

@@ -26,10 +26,10 @@ model Pet {
 }
 
 model Swipes {
-  from  Int
-  To    Int
-  liked Boolean @default(false)
-  id    Int     @id @unique @default(autoincrement())
+  from   Int
+  To     Int
+  id     Int    @id @unique @default(autoincrement())
+  status Status
 }
 
 model UserInterests {
@@ -60,4 +60,10 @@ enum Sex {
   female
   male
   secret
+}
+
+enum Status {
+  accepted
+  waiting
+  canceled
 }
