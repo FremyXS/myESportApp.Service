@@ -6,31 +6,67 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
 // https://www.prismabuilder.io/
-model ApplyController {
-  apply_id     String    @id @unique @default(cuid())
-  author_vk_id Int
-  description  String?
-  game         Game
-  created      DateTime  @default(now())
-  playing_time DateTime?
-  my           TeamComposition @default(Соло)
-  looking_for  TeamComposition @default(Соло)
+
+model User {
+  vk_id           Int               @id @unique
+  description     String
+  interests       Interest[]
+  my_sex          Sex
+  my_age          Int
+  my_achievements UserAchievement[]
+  my_pets         UserPet[]
 }
 
-enum Game {
-  CS-GO
-  Dota 2
-  Brawl Stars
-  Other
+model Pet {
+  pet_id  Int       @id @unique
+  name    String
+  UserPet UserPet[]
 }
 
-enum TeamComposition {
-  Соло
-  Дует
-  Трио
-  Сквад
-  5 человек
-  6 человек
-  Более 6 человек
+model Swipes {
+  id    String  @unique @default(cuid())
+  from  Int     @id @unique
+  To    Int
+  liked Boolean @default(false)
+}
+
+model Achievement {
+  achievement_id  Int               @id @unique @default(autoincrement())
+  title           String
+  description     String
+  UserAchievement UserAchievement[]
+}
+
+model UserAchievement {
+  achievment_id             String      @id @unique @default(cuid())
+  user                      User        @relation(fields: [userVk_id], references: [vk_id])
+  achievment                Achievement @relation(fields: [achievementAchievement_id], references: [achievement_id])
+  count                     Int         @default(autoincrement())
+  userVk_id                 Int
+  achievementAchievement_id Int
+}
+
+model Interest {
+  id        String @id @unique @default(cuid())
+  title     String
+  User      User?  @relation(fields: [userVk_id], references: [vk_id])
+  userVk_id Int?
+}
+
+model UserPet {
+  id        String @id @unique @default(cuid())
+  pet_sex   Sex
+  pet_name  String
+  pet_age   Int
+  pet       Pet    @relation(fields: [petPet_id], references: [pet_id])
+  User      User?  @relation(fields: [userVk_id], references: [vk_id])
+  userVk_id Int?
+  petPet_id Int
+}
+
+enum Sex {
+  female
+  male
 }
