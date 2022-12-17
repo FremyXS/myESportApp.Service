@@ -1,12 +1,13 @@
 // import {ApplyService} from "../service/applyService";
-import {Controller, Response, Post, Tags, Route, SuccessResponse, Body, Get, Path} from "tsoa";
+import {Controller, Response, Post, Tags, Route, SuccessResponse, Body, Get, Path, Security} from "tsoa";
 import {IResponse} from "../models/responseModel";
 import {ApplyModel} from "../models/applyModel";
 
 @Route('/apply')
 export class ApplyController extends Controller {
     @Post()
-    @Tags("Apply")
+    @Tags("Apply")Security
+    @Security("jwt")
     @Response<IResponse>('400', 'Bad Request')
     @SuccessResponse('200', 'OK')
     public async create(@Body() body: ApplyModel): Promise<IResponse> {

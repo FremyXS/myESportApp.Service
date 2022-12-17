@@ -24,70 +24,40 @@
 				"type": "object",
 				"additionalProperties": false
 			},
-			"Game": {
-				"enum": [
-					0,
-					1,
-					2,
-					3
-				],
-				"type": "number"
-			},
-			"TeamComposition": {
-				"enum": [
-					0,
-					1,
-					2,
-					3,
-					4,
-					5,
-					6
-				],
-				"type": "number"
-			},
-			"ApplyModel": {
+			"IRequestUser": {
 				"properties": {
-					"apply_id": {
+					"params": {
+						"additionalProperties": false,
+						"type": "object"
+					},
+					"sign": {
 						"type": "string"
-					},
-					"author_vk_id": {
-						"type": "number",
-						"format": "double"
-					},
-					"description": {
-						"type": "string"
-					},
-					"game": {
-						"$ref": "#/components/schemas/Game"
-					},
-					"created": {
-						"type": "string",
-						"format": "date-time"
-					},
-					"playing_time": {
-						"type": "string",
-						"format": "date-time"
-					},
-					"my": {
-						"$ref": "#/components/schemas/TeamComposition"
-					},
-					"looking_for": {
-						"$ref": "#/components/schemas/TeamComposition"
 					}
 				},
 				"required": [
-					"apply_id",
-					"author_vk_id",
-					"game",
-					"created",
-					"my",
-					"looking_for"
+					"params",
+					"sign"
 				],
 				"type": "object",
 				"additionalProperties": false
 			}
 		},
-		"securitySchemes": {}
+		"securitySchemes": {
+			"api_key": {
+				"type": "apiKey",
+				"name": "access_token",
+				"in": "query"
+			},
+			"tsoa_auth": {
+				"type": "oauth2",
+				"flows": {
+					"implicit": {
+						"authorizationUrl": "http://swagger.io/api/oauth/dialog",
+						"scopes": {}
+					}
+				}
+			}
+		}
 	},
 	"info": {
 		"title": "myesportapp.service",
@@ -102,48 +72,6 @@
 	},
 	"openapi": "3.0.0",
 	"paths": {
-		"/apply": {
-			"post": {
-				"operationId": "Create",
-				"responses": {
-					"200": {
-						"description": "OK",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/IResponse"
-								}
-							}
-						}
-					},
-					"400": {
-						"description": "Bad Request",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/IResponse"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Apply"
-				],
-				"security": [],
-				"parameters": [],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/ApplyModel"
-							}
-						}
-					}
-				}
-			}
-		},
 		"/apply/{apply_id}": {
 			"get": {
 				"operationId": "Get",
@@ -200,6 +128,48 @@
 				},
 				"security": [],
 				"parameters": []
+			}
+		},
+		"/user": {
+			"post": {
+				"operationId": "Auth",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Users"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/IRequestUser"
+							}
+						}
+					}
+				}
 			}
 		}
 	},

@@ -6,6 +6,11 @@ import { Controller, ValidationService, FieldErrors, ValidateError, TsoaRoute, H
 import { ApplyController } from './controllers/apply.controller';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { IndexController } from './controllers/index.controller';
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { UserController } from './controllers/user.controller';
+import { expressAuthentication } from './middleware/auth.middleware';
+// @ts-ignore - no great way to install types from subpackage
+const promiseAny = require('promise.any');
 import type { RequestHandler } from 'express';
 import * as express from 'express';
 
@@ -22,27 +27,11 @@ const models: TsoaRoute.Models = {
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "Game": {
-        "dataType": "refEnum",
-        "enums": [0,1,2,3],
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "TeamComposition": {
-        "dataType": "refEnum",
-        "enums": [0,1,2,3,4,5,6],
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "ApplyModel": {
+    "IRequestUser": {
         "dataType": "refObject",
         "properties": {
-            "apply_id": {"dataType":"string","required":true},
-            "author_vk_id": {"dataType":"double","required":true},
-            "description": {"dataType":"string"},
-            "game": {"ref":"Game","required":true},
-            "created": {"dataType":"datetime","required":true},
-            "playing_time": {"dataType":"datetime"},
-            "my": {"ref":"TeamComposition","required":true},
-            "looking_for": {"ref":"TeamComposition","required":true},
+            "params": {"dataType":"object","required":true},
+            "sign": {"dataType":"string","required":true},
         },
         "additionalProperties": false,
     },
@@ -57,31 +46,6 @@ export function RegisterRoutes(app: express.Router) {
     //  NOTE: If you do not see routes for all of your controllers in this file, then you might not have informed tsoa of where to look
     //      Please look into the "controllerPathGlobs" config option described in the readme: https://github.com/lukeautry/tsoa
     // ###########################################################################################################
-        app.post('/apply',
-            ...(fetchMiddlewares<RequestHandler>(ApplyController)),
-            ...(fetchMiddlewares<RequestHandler>(ApplyController.prototype.create)),
-
-            function ApplyController_create(request: any, response: any, next: any) {
-            const args = {
-                    body: {"in":"body","name":"body","required":true,"ref":"ApplyModel"},
-            };
-
-            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-
-            let validatedArgs: any[] = [];
-            try {
-                validatedArgs = getValidatedArgs(args, request, response);
-
-                const controller = new ApplyController();
-
-
-              const promise = controller.create.apply(controller, validatedArgs as any);
-              promiseHandler(controller, promise, response, 200, next);
-            } catch (err) {
-                return next(err);
-            }
-        });
-        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/apply/:apply_id',
             ...(fetchMiddlewares<RequestHandler>(ApplyController)),
             ...(fetchMiddlewares<RequestHandler>(ApplyController.prototype.get)),
@@ -126,6 +90,31 @@ export function RegisterRoutes(app: express.Router) {
 
               const promise = controller.index.apply(controller, validatedArgs as any);
               promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/user',
+            ...(fetchMiddlewares<RequestHandler>(UserController)),
+            ...(fetchMiddlewares<RequestHandler>(UserController.prototype.auth)),
+
+            function UserController_auth(request: any, response: any, next: any) {
+            const args = {
+                    body: {"in":"body","name":"body","required":true,"ref":"IRequestUser"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new UserController();
+
+
+              const promise = controller.auth.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, 200, next);
             } catch (err) {
                 return next(err);
             }
