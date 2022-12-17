@@ -1,11 +1,11 @@
 import {PrismaClient} from '@prisma/client'
+import {UserService} from './UserService'
 
 const prisma = new PrismaClient()
 
 export class PetService {
-    async getPets(){
-        const a = await prisma.pet.findMany();
-        return a;
+    async getPets() {
+        return await prisma.pet.findMany();
     }
 
     async petMatching(vk_id: number) {
@@ -20,13 +20,27 @@ export class PetService {
         const pet_id = my_pet.my_pet.petPet_id
         const users = await prisma.userPet.findMany({
             where: {
-                petPet_id: pet_id
+                AND: [
+                    {
+                        User: {
+                            every: {
+                                NOT: {vk_id: vk_id}
+                            }
+                        }
+                    },
+                    {
+                        pet: {
+                            pet_id: pet_id
+                        }
+                    }
+                ]
             },
             select: {
                 User: true
             }
         })
-        return users.map(e => e.User)
+        const serv = new UserService()
+        return users.map(async e => await serv.getUserProfile({vk_id: e.User[0].vk_id}))
     }
 
     async getUserPet(vk_id: number) {
@@ -43,7 +57,8 @@ export class PetService {
                         pet: {
                             select: {
                                 image: true,
-                                name: true
+                                name: true,
+                                pet_id: true
                             }
                         }
                     }
