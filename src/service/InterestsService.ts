@@ -1,7 +1,9 @@
-import {Interest, PrismaClient, User} from '@prisma/client'
+import {PrismaClient} from '@prisma/client'
 import {UpdateUserInterests} from "../models/interestsModel";
+import {UserService} from "./UserService"
 
 const prisma = new PrismaClient()
+
 
 export class InterestsService {
     async getInterests() {
@@ -50,14 +52,13 @@ export class InterestsService {
                 matching: my_interests.UserInterests.filter(s => e.UserInterests.map(x => x.interest.id).includes(s.interest.id)).length
             }
         })
+        const serv = new UserService()
         return users_matching.sort((a, b) => {
-            return b.matching - a.matching
-        }).map(e => {
-            return {
-                vk_id: e.vk_id,
-                test_sorted: e.matching
+            return b.matching - a.matching;
+        }).map(async (e) => {
+                return serv.getUserProfile({vk_id: e.vk_id});
             }
-        })
+        )
     }
 
     async getUserInterests(vk_id: number) {
