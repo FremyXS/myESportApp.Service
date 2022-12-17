@@ -13,6 +13,7 @@ model User {
   vk_id           Int               @id @unique
   description     String
   interests       Interest[]
+  city            String
   my_sex          Sex
   my_age          Int
   my_achievements UserAchievement[]
