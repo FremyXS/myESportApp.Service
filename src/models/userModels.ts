@@ -8,7 +8,7 @@ export type CreationUserData = {
     sex: Sex
     city: string
     pet: {
-        pet_id: number
+        pet_breed_id: number
         pet_sex: Sex
         pet_name: string
         pet_age: number

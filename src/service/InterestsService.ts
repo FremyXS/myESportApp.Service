@@ -11,7 +11,18 @@ export class InterestsService {
     async selectMatching(vk_id: number) {
         const my_interests = await prisma.user.findUnique({
             where: {vk_id: vk_id},
-            select: {interests: true}
+            select: {
+                UserInterests: {
+                    select: {
+                        interest: {
+                            select: {
+                                title: true,
+                                id: true
+                            }
+                        }
+                    }
+                }
+            }
         })
         const users_int = await prisma.user.findMany({
             where: {
@@ -21,14 +32,23 @@ export class InterestsService {
             },
             select: {
                 vk_id: true,
-                interests: true
+                UserInterests: {
+                    select: {
+                        interest: {
+                            select: {
+                                title: true,
+                                id: true
+                            }
+                        }
+                    }
+                },
             }
         })
         const users_matching = users_int.map(e => {
             return {
-                interests: e.interests,
+                interests: e.UserInterests,
                 vk_id: e.vk_id,
-                matching: my_interests.interests.filter(s => e.interests.includes(s)).length
+                matching: my_interests.UserInterests.filter(s => e.UserInterests.includes(s)).length
             }
         })
         return users_matching.sort((a, b) => {
