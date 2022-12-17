@@ -19,18 +19,7 @@ async function main() {
             {title: 'ЫЫЫ'}
         ]
     })
-    await prisma.achievement.createMany({
-        data: [
-            {
-                title: 'Самая длинная кличка',
-                description: "Выдается за самую длинную кличку среди всех пользователей приложения!",
-            },
-            {
-                title: 'Дружелюбный',
-                description: "У вас больше 50 взаимностей, поздравляем!",
-            }
-        ]
-    })
+
     console.log('Stop seeding successfully!')
 }
 

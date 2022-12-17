@@ -1,5 +1,5 @@
-import {PrismaClient, User} from '@prisma/client'
-import {CreationUserData, UserInfo} from '../models/userModels'
+import {PrismaClient} from '@prisma/client'
+import {CreationUserData} from '../models/userModels'
 
 const prisma = new PrismaClient()
 
@@ -9,7 +9,6 @@ export class UserService {
         await prisma.user.create({
             data: {
                 vk_id: data.vk_id,
-                my_achievements: {},
                 my_age: data.age,
                 my_sex: data.sex,
                 description: data.description,
@@ -40,16 +39,6 @@ export class UserService {
                 vk_id: data.vk_id
             },
             select: {
-                UserInterests: {
-                    select: {
-                        interest: {
-                            select: {
-                                title: true,
-                                id: true
-                            }
-                        }
-                    }
-                },
                 city: true,
                 my_pet: {
                     select: {
@@ -62,7 +51,6 @@ export class UserService {
                 my_age: true,
                 description: true,
                 my_sex: true,
-                my_achievements: true
             }
         })
     }

@@ -8,15 +8,14 @@ datasource db {
 }
 
 model User {
-  vk_id           Int               @id @unique
-  description     String
-  my_sex          Sex
-  my_age          Int
-  city            String
-  my_pet          UserPet           @relation(fields: [userPetId], references: [id])
-  my_achievements UserAchievement[]
-  UserInterests   UserInterests[]
-  userPetId       Int
+  vk_id         Int             @id @unique
+  description   String
+  my_sex        Sex
+  my_age        Int
+  city          String
+  my_pet        UserPet         @relation(fields: [userPetId], references: [id])
+  UserInterests UserInterests[]
+  userPetId     Int
 }
 
 model Pet {
@@ -33,24 +32,8 @@ model Swipes {
   id    Int     @id @unique @default(autoincrement())
 }
 
-model Achievement {
-  achievement_id  Int               @id @unique @default(autoincrement())
-  title           String
-  description     String
-  UserAchievement UserAchievement[]
-}
-
-model UserAchievement {
-  count                     Int         @default(0)
-  userVk_id                 Int
-  achievementAchievement_id Int
-  achievment_id             Int         @id @unique @default(autoincrement())
-  achievment                Achievement @relation(fields: [achievementAchievement_id], references: [achievement_id])
-  user                      User        @relation(fields: [userVk_id], references: [vk_id])
-}
-
 model UserInterests {
-  id         Int      @id  @unique @default(autoincrement())
+  id         Int      @id @unique @default(autoincrement())
   userVk_id  Int
   interestId Int
   interest   Interest @relation(fields: [interestId], references: [id])
