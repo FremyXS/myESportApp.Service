@@ -52,6 +52,27 @@
 				],
 				"type": "object"
 			},
+			"DoLikesRequest": {
+				"properties": {
+					"liked": {
+						"type": "boolean"
+					},
+					"user_to_like": {
+						"type": "number",
+						"format": "double"
+					},
+					"my_vk_id": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"liked",
+					"user_to_like",
+					"my_vk_id"
+				],
+				"type": "object"
+			},
 			"Sex": {
 				"type": "string",
 				"enum": [
@@ -365,6 +386,153 @@
 						}
 					}
 				}
+			}
+		},
+		"/likes": {
+			"post": {
+				"operationId": "DoLikeUser",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IResponse"
+								}
+							}
+						},
+						"headers": {
+							"IResponse": {
+								"schema": {
+									"$ref": "#/components/schemas/IResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Likes"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/DoLikesRequest"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/likes/{vk_id}": {
+			"get": {
+				"operationId": "GetMyLikedUsers",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IResponse"
+								}
+							}
+						},
+						"headers": {
+							"IResponse": {
+								"schema": {
+									"$ref": "#/components/schemas/IResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Likes"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "vk_id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/likes/to/{vk_id}": {
+			"get": {
+				"operationId": "GetUsersWhoLikedMe",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IResponse"
+								}
+							}
+						},
+						"headers": {
+							"IResponse": {
+								"schema": {
+									"$ref": "#/components/schemas/IResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Likes"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "vk_id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
 			}
 		},
 		"/pets/all": {

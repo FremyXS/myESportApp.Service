@@ -5,6 +5,8 @@ import { Controller, ValidationService, FieldErrors, ValidateError, TsoaRoute, H
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { InterestsController } from './controllers/interests.controller';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { LikesController } from './controllers/likes.controller';
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { PetController } from './controllers/pet.controller';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { UserController } from './controllers/user.controller';
@@ -30,6 +32,11 @@ const models: TsoaRoute.Models = {
     "UpdateUserInterests": {
         "dataType": "refAlias",
         "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"interests":{"dataType":"array","array":{"dataType":"nestedObjectLiteral","nestedProperties":{"interestId":{"dataType":"double","required":true},"userVk_id":{"dataType":"double","required":true}}},"required":true}},"validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "DoLikesRequest": {
+        "dataType": "refAlias",
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"liked":{"dataType":"boolean","required":true},"user_to_like":{"dataType":"double","required":true},"my_vk_id":{"dataType":"double","required":true}},"validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "Sex": {
@@ -151,6 +158,81 @@ export function RegisterRoutes(app: express.Router) {
 
 
               const promise = controller.updateInterestsUser.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, 200, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/likes',
+            ...(fetchMiddlewares<RequestHandler>(LikesController)),
+            ...(fetchMiddlewares<RequestHandler>(LikesController.prototype.doLikeUser)),
+
+            function LikesController_doLikeUser(request: any, response: any, next: any) {
+            const args = {
+                    body: {"in":"body","name":"body","required":true,"ref":"DoLikesRequest"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new LikesController();
+
+
+              const promise = controller.doLikeUser.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, 200, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/likes/:vk_id',
+            ...(fetchMiddlewares<RequestHandler>(LikesController)),
+            ...(fetchMiddlewares<RequestHandler>(LikesController.prototype.getMyLikedUsers)),
+
+            function LikesController_getMyLikedUsers(request: any, response: any, next: any) {
+            const args = {
+                    vk_id: {"in":"path","name":"vk_id","required":true,"dataType":"double"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new LikesController();
+
+
+              const promise = controller.getMyLikedUsers.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, 200, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/likes/to/:vk_id',
+            ...(fetchMiddlewares<RequestHandler>(LikesController)),
+            ...(fetchMiddlewares<RequestHandler>(LikesController.prototype.getUsersWhoLikedMe)),
+
+            function LikesController_getUsersWhoLikedMe(request: any, response: any, next: any) {
+            const args = {
+                    vk_id: {"in":"path","name":"vk_id","required":true,"dataType":"double"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new LikesController();
+
+
+              const promise = controller.getUsersWhoLikedMe.apply(controller, validatedArgs as any);
               promiseHandler(controller, promise, response, 200, next);
             } catch (err) {
                 return next(err);
