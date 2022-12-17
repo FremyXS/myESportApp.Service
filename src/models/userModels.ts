@@ -20,5 +20,19 @@ export type UserInfo = {
     city: string
     my_sex: Sex
     my_age: number
-    my_pet: {pet_sex: Sex, pet_name: string, pet_age: number, pet: Pet}
+    my_pet: { pet_sex: Sex, pet_name: string, pet_age: number, pet: Pet }
+}
+
+export type UpdateUserInfo = {
+    description?: string
+    city?: string
+    my_sex?: Sex
+    my_age?: number
+}
+
+export type UpdateUserInterests = {
+    interests: {
+        userVk_id: number,
+        interestId: number
+    }[]
 }

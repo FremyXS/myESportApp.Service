@@ -59,4 +59,5 @@ model UserPet {
 enum Sex {
   female
   male
+  secret
 }

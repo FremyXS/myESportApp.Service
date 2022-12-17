@@ -1,5 +1,5 @@
 import {PrismaClient} from '@prisma/client'
-import {CreationUserData} from '../models/userModels'
+import {CreationUserData, UpdateUserInfo, UpdateUserInterests} from '../models/userModels'
 
 const prisma = new PrismaClient()
 
@@ -34,7 +34,7 @@ export class UserService {
     }
 
     async getUserProfile(data: { vk_id: number }): Promise<any> {
-        return  await prisma.user.findUniqueOrThrow({
+        return await prisma.user.findUniqueOrThrow({
             where: {
                 vk_id: data.vk_id
             },
@@ -51,6 +51,67 @@ export class UserService {
                 my_age: true,
                 description: true,
                 my_sex: true,
+            }
+        })
+    }
+
+    async updateUserData(vk_id: number, data: UpdateUserInfo) {
+        await prisma.user.update({
+            where: {vk_id: vk_id},
+            data: data
+        })
+    }
+
+    async getUserInterests(vk_id: number) {
+        return await prisma.user.findUniqueOrThrow({
+            where: {
+                vk_id: vk_id
+            },
+            select: {
+                UserInterests: {
+                    select: {
+                        interest: {
+                            select: {
+                                title: true,
+                                id: true
+                            }
+                        }
+                    }
+                }
+            }
+        })
+    }
+
+    async updateInterests(vk_id: number, interests: UpdateUserInterests) {
+        await prisma.userInterests.deleteMany({
+            where: {
+                userVk_id: vk_id
+            }
+        })
+        await prisma.userInterests.createMany({
+            data: interests.interests
+        })
+    }
+
+    async getUserPet(vk_id: number) {
+        await prisma.user.findUnique({
+            where: {
+                vk_id: vk_id
+            },
+            select: {
+                my_pet: {
+                    select: {
+                        pet_name: true,
+                        pet_sex: true,
+                        pet_age: true,
+                        pet: {
+                            select: {
+                                image: true,
+                                name: true
+                            }
+                        }
+                    }
+                }
             }
         })
     }
