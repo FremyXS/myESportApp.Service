@@ -52,10 +52,18 @@
 				],
 				"type": "object"
 			},
+			"Status": {
+				"type": "string",
+				"enum": [
+					"accepted",
+					"waiting",
+					"canceled"
+				]
+			},
 			"DoLikesRequest": {
 				"properties": {
-					"liked": {
-						"type": "boolean"
+					"status": {
+						"$ref": "#/components/schemas/Status"
 					},
 					"user_to_like": {
 						"type": "number",
@@ -67,7 +75,7 @@
 					}
 				},
 				"required": [
-					"liked",
+					"status",
 					"user_to_like",
 					"my_vk_id"
 				],

@@ -1,38 +1,42 @@
 import {PrismaClient, Status} from '@prisma/client'
+import {DoLikesRequest} from "../models/likesModel";
 const prisma = new PrismaClient()
 
 export class LikesService {
-    async doLike(my_vk_id: number, user_to_like: number, status: Status) {
-        await prisma.swipes.findFirstOrThrow({
+    async doLike(data: DoLikesRequest) {
+        // await prisma.swipes.findFirstOrThrow({
+        //     where: {
+
+        //     }
+        // })
+        // console.log(1)
+        const currentLike = await prisma.swipes.findFirst({
             where: {
                 AND: [
-                    {from: my_vk_id},
-                    {To: user_to_like},
-                    {status: status}
+                    {from: data.my_vk_id},
+                    {To: data.user_to_like},
                 ]
             }
         })
+        if (currentLike) return currentLike;
         await prisma.swipes.create({
             data: {
-                status: status,
-                from: my_vk_id,
-                To: user_to_like
+                status: data.status,
+                from: data.my_vk_id,
+                To: data.user_to_like
             }
         })
-
-        if (status === Status.accepted) {
-            await prisma.swipes.findFirstOrThrow({
-                where: {
-                    AND: [
-                        {To: my_vk_id},
-                        {from: user_to_like},
-                        {status: Status.accepted}
-                    ]
-                }
-            }).then(() => {
-                //TODO: вызов уведомления
-            }).catch()
-        }
+        // if (data.status === Status.accepted) {
+        //     await prisma.swipes.findFirstOrThrow({
+        //         where: {
+        //             AND: [
+        //                 {To: data.my_vk_id},
+        //                 {from: data.user_to_like},
+        //                 {status: Status.accepted}
+        //             ]
+        //         }
+        //     })
+        // }
     }
 
     async getMyLikedUsers(vk_id: number) {
@@ -44,17 +48,13 @@ export class LikesService {
                 ]
             },
             select: {
-                To: true
-            }
+                To: true,
+            },
         })
         const vk_ids = liked_users.map(e => {
             return {vk_id: e.To}
         })
-        return await vk_ids.map(async e => await prisma.user.findUnique({
-            where: {
-                vk_id: e.vk_id
-            }
-        }))
+        return vk_ids
     }
 
     async getUsersWhoLikedMe(vk_id: number) {
@@ -66,16 +66,12 @@ export class LikesService {
                 ]
             },
             select: {
-                To: true
+                from: true
             }
         })
         const vk_ids = liked_users.map(e => {
-            return {vk_id: e.To}
+            return {vk_id: e.from}
         })
-        return await vk_ids.map(async e => await prisma.user.findUnique({
-            where: {
-                vk_id: e.vk_id
-            }
-        }))
+        return vk_ids
     }
 }
