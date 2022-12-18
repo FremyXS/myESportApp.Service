@@ -45,7 +45,7 @@ export class LikesService {
             }
         })
         if (data.status === Status.accepted) {
-            socketGlobal.emit("notification", {type: "LIKES", recipient: data.user_to_like, sender: data.my_vk_id})
+            // socketGlobal.emit("notification", {type: "LIKES", recipient: data.user_to_like, sender: data.my_vk_id})
         }
     }
 
@@ -128,7 +128,7 @@ export class LikesService {
         likes_users.forEach(e => {
             if (waiting_status.find(id => id.To === e.from)) {
                 matching_users.push(e.from)
-                socketGlobal.emit("notification", {type: "LIKES", recipient: vk_id, sender: e.from})
+                // socketGlobal.emit("notification", {type: "LIKES", recipient: vk_id, sender: e.from})
             }
         })
         return matching_users;
