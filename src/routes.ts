@@ -169,56 +169,6 @@ export function RegisterRoutes(app: express.Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.post('/likes',
-            ...(fetchMiddlewares<RequestHandler>(LikesController)),
-            ...(fetchMiddlewares<RequestHandler>(LikesController.prototype.doLikeUser)),
-
-            function LikesController_doLikeUser(request: any, response: any, next: any) {
-            const args = {
-                    body: {"in":"body","name":"body","required":true,"ref":"DoLikesRequest"},
-            };
-
-            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-
-            let validatedArgs: any[] = [];
-            try {
-                validatedArgs = getValidatedArgs(args, request, response);
-
-                const controller = new LikesController();
-
-
-              const promise = controller.doLikeUser.apply(controller, validatedArgs as any);
-              promiseHandler(controller, promise, response, 200, next);
-            } catch (err) {
-                return next(err);
-            }
-        });
-        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.get('/likes/:vk_id',
-            ...(fetchMiddlewares<RequestHandler>(LikesController)),
-            ...(fetchMiddlewares<RequestHandler>(LikesController.prototype.getMyLikedUsers)),
-
-            function LikesController_getMyLikedUsers(request: any, response: any, next: any) {
-            const args = {
-                    vk_id: {"in":"path","name":"vk_id","required":true,"dataType":"double"},
-            };
-
-            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-
-            let validatedArgs: any[] = [];
-            try {
-                validatedArgs = getValidatedArgs(args, request, response);
-
-                const controller = new LikesController();
-
-
-              const promise = controller.getMyLikedUsers.apply(controller, validatedArgs as any);
-              promiseHandler(controller, promise, response, 200, next);
-            } catch (err) {
-                return next(err);
-            }
-        });
-        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/likes/to/:vk_id',
             ...(fetchMiddlewares<RequestHandler>(LikesController)),
             ...(fetchMiddlewares<RequestHandler>(LikesController.prototype.getUsersWhoLikedMe)),
@@ -263,6 +213,81 @@ export function RegisterRoutes(app: express.Router) {
 
 
               const promise = controller.getOfflineAccept.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, 200, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/likes/reciprocal/:vk_id',
+            ...(fetchMiddlewares<RequestHandler>(LikesController)),
+            ...(fetchMiddlewares<RequestHandler>(LikesController.prototype.getReciprocalMe)),
+
+            function LikesController_getReciprocalMe(request: any, response: any, next: any) {
+            const args = {
+                    vk_id: {"in":"path","name":"vk_id","required":true,"dataType":"double"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new LikesController();
+
+
+              const promise = controller.getReciprocalMe.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, 200, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/likes',
+            ...(fetchMiddlewares<RequestHandler>(LikesController)),
+            ...(fetchMiddlewares<RequestHandler>(LikesController.prototype.doLikeUser)),
+
+            function LikesController_doLikeUser(request: any, response: any, next: any) {
+            const args = {
+                    body: {"in":"body","name":"body","required":true,"ref":"DoLikesRequest"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new LikesController();
+
+
+              const promise = controller.doLikeUser.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, 200, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/likes/:vk_id',
+            ...(fetchMiddlewares<RequestHandler>(LikesController)),
+            ...(fetchMiddlewares<RequestHandler>(LikesController.prototype.getMyLikedUsers)),
+
+            function LikesController_getMyLikedUsers(request: any, response: any, next: any) {
+            const args = {
+                    vk_id: {"in":"path","name":"vk_id","required":true,"dataType":"double"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new LikesController();
+
+
+              const promise = controller.getMyLikedUsers.apply(controller, validatedArgs as any);
               promiseHandler(controller, promise, response, 200, next);
             } catch (err) {
                 return next(err);

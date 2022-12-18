@@ -396,104 +396,6 @@
 				}
 			}
 		},
-		"/likes": {
-			"post": {
-				"operationId": "DoLikeUser",
-				"responses": {
-					"200": {
-						"description": "OK",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/IResponse"
-								}
-							}
-						},
-						"headers": {
-							"IResponse": {
-								"schema": {
-									"$ref": "#/components/schemas/IResponse"
-								}
-							}
-						}
-					},
-					"400": {
-						"description": "Bad Request",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/IResponse"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Likes"
-				],
-				"security": [],
-				"parameters": [],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/DoLikesRequest"
-							}
-						}
-					}
-				}
-			}
-		},
-		"/likes/{vk_id}": {
-			"get": {
-				"operationId": "GetMyLikedUsers",
-				"responses": {
-					"200": {
-						"description": "OK",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/IResponse"
-								}
-							}
-						},
-						"headers": {
-							"IResponse": {
-								"schema": {
-									"$ref": "#/components/schemas/IResponse"
-								}
-							}
-						}
-					},
-					"400": {
-						"description": "Bad Request",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/IResponse"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Likes"
-				],
-				"security": [],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "vk_id",
-						"required": true,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					}
-				]
-			}
-		},
 		"/likes/to/{vk_id}": {
 			"get": {
 				"operationId": "GetUsersWhoLikedMe",
@@ -546,6 +448,153 @@
 		"/likes/offline/{vk_id}": {
 			"get": {
 				"operationId": "GetOfflineAccept",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IResponse"
+								}
+							}
+						},
+						"headers": {
+							"IResponse": {
+								"schema": {
+									"$ref": "#/components/schemas/IResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Likes"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "vk_id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/likes/reciprocal/{vk_id}": {
+			"get": {
+				"operationId": "GetReciprocalMe",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IResponse"
+								}
+							}
+						},
+						"headers": {
+							"IResponse": {
+								"schema": {
+									"$ref": "#/components/schemas/IResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Likes"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "vk_id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/likes": {
+			"post": {
+				"operationId": "DoLikeUser",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IResponse"
+								}
+							}
+						},
+						"headers": {
+							"IResponse": {
+								"schema": {
+									"$ref": "#/components/schemas/IResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Likes"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/DoLikesRequest"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/likes/{vk_id}": {
+			"get": {
+				"operationId": "GetMyLikedUsers",
 				"responses": {
 					"200": {
 						"description": "OK",

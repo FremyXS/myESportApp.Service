@@ -133,4 +133,38 @@ export class LikesService {
         })
         return matching_users;
     }
+
+    async getReciprocalMe(vk_id: number) {
+        const likes_users = await prisma.swipes.findMany({
+            where: {
+                AND: [
+                    {To: vk_id},
+                    {status: Status.accepted}
+                ]
+            },
+            select: {
+                from: true
+            }
+        })
+        const likes_me = await prisma.swipes.findMany({
+            where: {
+                AND: [
+                    {from: vk_id},
+                    {status: Status.accepted}
+                ]
+            },
+            select: {
+                To: true,
+            }
+        })
+
+        let matching_users = [];
+        likes_users.forEach(e => {
+            if (likes_me.find(id => id.To === e.from)) {
+                matching_users.push(e.from)
+                // socketGlobal.emit("notification", {type: "LIKES", recipient: vk_id, sender: e.from})
+            }
+        })
+        return matching_users;
+    }
 }
