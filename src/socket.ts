@@ -1,4 +1,5 @@
 import * as http from "http";
+import {PetService} from "./service/PetService";
 
 export function RegisterSocket(server: http.Server) {
     const io = require("socket.io")(server, {
@@ -7,8 +8,12 @@ export function RegisterSocket(server: http.Server) {
             methods: ["GET", "POST"]
         }
     });
-    io.on("connection", (socket: any) => {
-        console.log(`${socket.id} connected to server`)
+    io.on("connection", (socket) => {
+        socket.on("breedSearch", async (text: string, callback) => {
+            const petService = new PetService();
+            const pets = await petService.getPetSearch(text);
+            callback(pets);
+        })
     })
     return io;
 }

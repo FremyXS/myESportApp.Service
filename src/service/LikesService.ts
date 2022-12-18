@@ -74,4 +74,19 @@ export class LikesService {
         })
         return vk_ids
     }
+
+    async getAllLikesMe(vk_id: number) {
+        const likes_users = await prisma.swipes.findMany({
+            where: {
+                from: vk_id
+            },
+            select: {
+                To: true
+            }
+        })
+        const vk_ids = likes_users.map(e => {
+            return e.To
+        })
+        return vk_ids
+    }
 }

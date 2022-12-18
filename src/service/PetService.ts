@@ -1,11 +1,21 @@
-import {PrismaClient} from '@prisma/client'
+import {Pet, PrismaClient} from '@prisma/client'
 import {UserService} from './UserService'
+import {LikesService} from "./LikesService";
 
 const prisma = new PrismaClient()
 
 export class PetService {
     async getPets() {
         return await prisma.pet.findMany();
+    }
+
+    async getPetSearch(text: string): Promise<Pet[]>  {
+        const pets = await prisma.pet.findMany({
+            where: {
+                name: {contains: text}
+            }
+        });
+        return pets
     }
 
     async petMatching(vk_id: number) {
@@ -39,8 +49,22 @@ export class PetService {
                 User: true
             }
         })
+
+        const likesService = new LikesService();
+        const likes_users = await likesService.getAllLikesMe(vk_id);
+
+        const users_matching = [];
+        users.forEach(e => {
+            if (!likes_users.includes(e.User[0].vk_id)) users_matching.push({vk_id: e.User[0].vk_id})
+        })
+
         const serv = new UserService()
-        return users.map(async e => await serv.getUserProfile({vk_id: e.User[0].vk_id}))
+        const response = [];
+        for (const e of users_matching) {
+            const user = await serv.getUserProfile(e);
+            response.push(user)
+        }
+        return response;
     }
 
     async getUserPet(vk_id: number) {

@@ -1,6 +1,7 @@
 import {PrismaClient} from '@prisma/client'
 import {UpdateUserInterests} from "../models/interestsModel";
 import {UserService} from "./UserService"
+import {LikesService} from "./LikesService";
 
 const prisma = new PrismaClient()
 
@@ -45,20 +46,29 @@ export class InterestsService {
                 },
             }
         })
-        const users_matching = users_int.map(e => {
-            return {
+        const likesService = new LikesService();
+        const likes_users = await likesService.getAllLikesMe(vk_id);
+
+        const users_matching = [];
+        users_int.forEach(e => {
+            if (!likes_users.includes(e.vk_id)) users_matching.push({
                 interests: e.UserInterests,
                 vk_id: e.vk_id,
                 matching: my_interests.UserInterests.filter(s => e.UserInterests.map(x => x.interest.id).includes(s.interest.id)).length
-            }
+            })
         })
+
         const serv = new UserService()
-        return users_matching.sort((a, b) => {
+        users_matching.sort((a, b) => {
             return b.matching - a.matching;
-        }).map(async (e) => {
-                return serv.getUserProfile({vk_id: e.vk_id});
-            }
-        )
+        })
+
+        const response = [];
+        for (const e of users_matching) {
+                const user = await serv.getUserProfile({vk_id: e.vk_id});
+                response.push(user)
+        }
+        return response;
     }
 
     async getUserInterests(vk_id: number) {

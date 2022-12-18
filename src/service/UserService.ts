@@ -39,6 +39,7 @@ export class UserService {
                 vk_id: data.vk_id
             },
             select: {
+                vk_id: true,
                 city: true,
                 my_pet: {
                     select: {
