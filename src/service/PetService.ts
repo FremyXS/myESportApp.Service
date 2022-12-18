@@ -1,6 +1,7 @@
-import {Pet, PrismaClient} from '@prisma/client'
+import {Pet, PrismaClient, Sex} from '@prisma/client'
 import {UserService} from './UserService'
 import {LikesService} from "./LikesService";
+import {PetModel} from "../models/petModel";
 
 const prisma = new PrismaClient()
 
@@ -9,7 +10,7 @@ export class PetService {
         return await prisma.pet.findMany();
     }
 
-    async getPetSearch(text: string): Promise<Pet[]>  {
+    async getPetSearch(text: string): Promise<Pet[]> {
         const pets = await prisma.pet.findMany({
             where: {
                 name: {contains: text}
@@ -90,4 +91,24 @@ export class PetService {
             }
         })
     }
+
+    async updateUserPet(vk_id: number, pet: PetModel) {
+        return await prisma.user.update({
+            where: {vk_id: vk_id},
+            data: {
+                my_pet: {
+                    create: {
+                        pet_sex: pet.pet_sex,
+                        pet_name: pet.pet_name,
+                        petPet_id: pet.petPet_id,
+                        pet_age: pet.pet_age
+                    }
+                }
+            },
+            select: {
+                my_pet: true
+            }
+        })
+    }
+
 }
