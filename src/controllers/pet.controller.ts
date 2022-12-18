@@ -1,6 +1,7 @@
-import {Controller, Get, Path, Response, Route, SuccessResponse, Tags} from "tsoa";
+import {Body, Controller, Get, Path, Put, Response, Route, SuccessResponse, Tags} from "tsoa";
 import {IResponse} from "../models/responseModel";
 import {PetService} from "../service/PetService";
+import {PetModel} from "../models/petModel";
 
 @Route('/pets')
 export class PetController extends Controller {
@@ -77,6 +78,31 @@ export class PetController extends Controller {
                 message: "FAIL",
                 status: "400",
                 data: err.message
+            }
+            return response
+        }
+    }
+
+    @Put("{vk_id}")
+    @Tags("Pets")
+    @Response<IResponse>('400', 'Bad Request')
+    @SuccessResponse<IResponse>('200', 'OK')
+    public async updatePetUser(@Path() vk_id: number, @Body() body: PetModel): Promise<IResponse> {
+        try {
+            const petService = new PetService();
+            const pet = await petService.updateUserPet(vk_id, body);
+            const response = {
+                message: "OK",
+                status: "200",
+                data: "Питомец обновлен"
+            }
+            return response;
+        } catch (err) {
+            this.setStatus(400);
+            const response = {
+                message: "FAIL",
+                status: "400",
+                data: err
             }
             return response
         }
