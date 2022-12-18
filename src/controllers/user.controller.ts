@@ -54,6 +54,32 @@ export class UserController extends Controller {
         }
     }
 
+    @Get("/all")
+    @Tags("Users")
+    // @Security("jwt")
+    @Response<IResponse>('400', 'Bad Request')
+    @SuccessResponse<IResponse>('200', 'OK')
+    public async getAllUsers(): Promise<IResponse> {
+        try {
+            const userService = new UserService();
+            const users = await userService.getAllUsers()
+            const response = {
+                message: "OK",
+                status: "200",
+                data: users
+            }
+            return response;
+        } catch (err) {
+            this.setStatus(400);
+            const response = {
+                message: "FAIL",
+                status: "400",
+                data: err.message
+            }
+            return response
+        }
+    }
+
     @Get("{vk_id}")
     @Tags("Users")
     // @Security("jwt")

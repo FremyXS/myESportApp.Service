@@ -82,4 +82,30 @@ export class LikesController extends Controller {
             return response
         }
     }
+
+    @Get("/offline/{vk_id}")
+    @Tags("Likes")
+    // @Security("jwt")
+    @Response<IResponse>('400', 'Bad Request')
+    @SuccessResponse<IResponse>('200', 'OK')
+    public async getOfflineAccept(@Path() vk_id: number): Promise<IResponse> {
+        try {
+            const likesService = new LikesService();
+            const likes = await likesService.getUserAcceptStatus(vk_id);
+            const response = {
+                message: "OK",
+                status: "200",
+                data: likes
+            }
+            return response;
+        } catch (err) {
+            this.setStatus(400);
+            const response = {
+                message: "FAIL",
+                status: "400",
+                data: err.message
+            }
+            return response
+        }
+    }
 }
