@@ -1,8 +1,7 @@
 import {PrismaClient, Status} from '@prisma/client'
 import {DoLikesRequest} from "../models/likesModel";
-const prisma = new PrismaClient()
 
-import {socketGlobal} from "../socket";
+const prisma = new PrismaClient()
 
 export class LikesService {
     async doLike(data: DoLikesRequest) {
@@ -79,10 +78,9 @@ export class LikesService {
                 from: true
             }
         })
-        const vk_ids = liked_users.map(e => {
-            return {vk_id: e.from}
+        return liked_users.map(e => {
+            return e.from
         })
-        return vk_ids
     }
 
     async getAllLikesMe(vk_id: number) {
